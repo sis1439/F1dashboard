@@ -26,6 +26,10 @@ test_cache/
 backend/redis_viewer.py
 backend/requirements-test.txt
 backend/check_environment.py
+backend/main_old.py
+
+# Documentation (exclude from repo)
+backend/README.md
 
 # Frontend testing
 my-app/src/App.test.js
