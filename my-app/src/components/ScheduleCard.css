@@ -1,0 +1,220 @@
+.schedule-card {
+  background: linear-gradient(135deg, #1a2035 0%, #16213e 100%);
+  border: 1px solid #2d3748;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 24px;
+}
+
+.schedule-card .ant-card-head {
+  background: transparent;
+  border-bottom: 1px solid #2d3748;
+  padding: 16px 24px;
+}
+
+.schedule-card .ant-card-body {
+  padding: 24px;
+}
+
+.schedule-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-timeline {
+  padding-right: 16px;
+}
+
+.schedule-timeline .ant-timeline {
+  margin-top: 0;
+}
+
+.schedule-timeline .ant-timeline-item {
+  padding-bottom: 16px;
+}
+
+.schedule-timeline .ant-timeline-item-content {
+  margin-left: 32px;
+  min-height: 48px;
+}
+
+.session-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.session-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.session-header .ant-tag {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  margin: 0;
+  padding: 2px 6px;
+}
+
+.circuit-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.circuit-image-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0f1419;
+  border: 1px solid #2d3748;
+}
+
+.circuit-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0f1419;
+  transition: transform 0.3s ease;
+}
+
+.circuit-image:hover {
+  transform: scale(1.05);
+}
+
+.circuit-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  background: #0f1419;
+  border: 1px solid #2d3748;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.circuit-info {
+  padding: 12px 0;
+  border-top: 1px solid #2d3748;
+}
+
+.circuit-info span {
+  line-height: 1.4;
+}
+
+/* Timeline 自定义样式 */
+.schedule-timeline .ant-timeline-item-tail {
+  border-left: 2px solid #2d3748;
+}
+
+.schedule-timeline .ant-timeline-item-head {
+  background: #1a2035;
+  border: 2px solid;
+  width: 12px;
+  height: 12px;
+}
+
+/* Timeline dot 图标样式 */
+.schedule-timeline .ant-timeline-item-head .anticon {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.schedule-timeline .ant-timeline-item-head-custom {
+  border: none !important;
+  background: transparent !important;
+  padding: 0;
+}
+
+/* 脉动动画 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .schedule-card .ant-row {
+    flex-direction: column;
+  }
+
+  .schedule-card .ant-col {
+    width: 100% !important;
+    margin-bottom: 16px;
+  }
+
+  .circuit-image-container,
+  .circuit-placeholder {
+    height: 160px;
+  }
+}
+
+/* 动画效果 */
+.schedule-card {
+  transition: all 0.3s ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.session-item {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.session-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.session-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.session-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.session-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.session-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 加载状态优化 */
+.schedule-card .ant-spin {
+  color: #fff;
+}
+
+.schedule-card .ant-spin-dot-item {
+  background-color: #1890ff;
+}

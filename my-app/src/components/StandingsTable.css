@@ -1,0 +1,88 @@
+/* StandingsTable 专用样式 */
+.standings-table-container {
+  margin-bottom: 16px;
+}
+
+.standings-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+/* 深色主题 */
+.dark-table {
+  background: #181c2f !important;
+}
+
+.dark-table .ant-table-container {
+  background: #181c2f !important;
+}
+
+.dark-table .ant-table-content {
+  background: #181c2f !important;
+}
+
+.dark-table .ant-table-thead>tr>th {
+  background: #1f2937 !important;
+  color: #fff !important;
+  border-bottom: 1px solid #374151 !important;
+}
+
+.dark-table .ant-table-tbody {
+  background: #181c2f !important;
+}
+
+.dark-table .ant-table-tbody>tr {
+  background: #181c2f !important;
+}
+
+.dark-table .ant-table-tbody>tr>td {
+  background: #181c2f !important;
+  color: #fff !important;
+  border-bottom: 1px solid #374151 !important;
+}
+
+.dark-table .ant-table-tbody>tr:hover>td {
+  background: #1f2937 !important;
+}
+
+/* 浅色主题 */
+.light-table {
+  background: #ffffff !important;
+}
+
+.light-table .ant-table-container {
+  background: #ffffff !important;
+}
+
+.light-table .ant-table-content {
+  background: #ffffff !important;
+}
+
+.light-table .ant-table-thead>tr>th {
+  background: #fafafa !important;
+  color: #333 !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.light-table .ant-table-tbody {
+  background: #ffffff !important;
+}
+
+.light-table .ant-table-tbody>tr {
+  background: #ffffff !important;
+}
+
+.light-table .ant-table-tbody>tr>td {
+  background: #ffffff !important;
+  color: #333 !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.light-table .ant-table-tbody>tr:hover>td {
+  background: #f5f5f5 !important;
+}
+
+.light-table .ant-table-tbody>tr:hover {
+  background: #f5f5f5 !important;
+}
