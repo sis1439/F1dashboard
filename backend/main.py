@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Optional
+from typing import Optional, List, Dict, Any
 
 # 导入业务逻辑函数
 from standings_api import get_driver_standings, get_constructor_standings
-from schedule_api import get_available_years, get_race_schedule, get_next_race_info
+from schedule_api import get_available_years, get_race_schedule, get_next_race_info, get_race_weekend_schedule, get_circuit_info
 from race_results_api import get_race_results, get_qualifying_results, get_practice_results, get_race_summary
 from cache_utils import clear_cache_pattern, redis_client
 
@@ -25,16 +25,16 @@ app.add_middleware(
 
 # 积分榜API
 @app.get("/api/driver-standings")
-def driver_standings(year: Optional[int] = Query(None)):
+def driver_standings(year: Optional[int] = Query(None), round: Optional[int] = Query(None)):
     try:
-        return get_driver_standings(year)
+        return get_driver_standings(year, round)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/constructor-standings")
-def constructor_standings(year: Optional[int] = Query(None)):
+def constructor_standings(year: Optional[int] = Query(None), round: Optional[int] = Query(None)):
     try:
-        return get_constructor_standings(year)
+        return get_constructor_standings(year, round)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -57,6 +57,20 @@ def race_schedule(year: Optional[int] = Query(None)):
 def next_race(year: Optional[int] = Query(None)):
     try:
         return get_next_race_info(year)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/race-weekend-schedule")
+def race_weekend_schedule(year: Optional[int] = Query(None), round: Optional[int] = Query(None)):
+    try:
+        return get_race_weekend_schedule(year, round)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/circuit-info")
+def circuit_info(year: Optional[int] = Query(None), round: Optional[int] = Query(None)):
+    try:
+        return get_circuit_info(year, round)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
