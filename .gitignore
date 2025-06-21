@@ -75,4 +75,9 @@ build/
 
 # Cache
 .cache/
-.pytest_cache/ 
+.pytest_cache/
+
+# Test/debug JSON files
+race_result.json
+session_results_analysis.json
+check_cache.py 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api', // 预留Python后端接口
+  baseURL: 'http://localhost:8000/api',
   timeout: 10000,
 });
 
@@ -12,6 +12,12 @@ export const getRaceSchedule = (year) => api.get('/race-schedule', { params: { y
 export const getNextRace = (year) => api.get('/next-race', { params: { year } });
 export const getRaceWeekendSchedule = (year, round) => api.get('/race-weekend-schedule', { params: { year, round } });
 export const getCircuitInfo = (year, round) => api.get('/circuit-info', { params: { year, round } });
-// ... 其他接口
+
+// Results API
+export const getRaceResults = (year, round) => api.get('/race-results', { params: { year, round } });
+export const getQualifyingResults = (year, round) => api.get('/qualifying-results', { params: { year, round } });
+export const getPracticeResults = (year, round, session) => api.get('/practice-results', { params: { year, round, session } });
+export const getRaceSummary = (year, round) => api.get('/race-summary', { params: { year, round } });
+export const getAvailableSessions = (year, round) => api.get('/race-summary', { params: { year, round } });
 
 export default api; 
