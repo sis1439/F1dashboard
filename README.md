@@ -78,4 +78,4 @@ F1-dashboard/
 
 ## License
 
-MIT © 2024 <https://github.com/sis1439> 
+MIT © 2025 <https://github.com/sis1439> 
