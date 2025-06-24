@@ -29,7 +29,7 @@ backend/check_environment.py
 backend/main_old.py
 
 # Documentation (exclude from repo)
-backend/README.md
+
 
 # Frontend testing
 my-app/src/App.test.js
@@ -80,4 +80,39 @@ build/
 # Test/debug JSON files
 race_result.json
 session_results_analysis.json
-check_cache.py 
+check_cache.py
+
+# FastF1 cache files
+backend/src/cache/
+*.sqlite
+*.sqlite3
+
+# Package lock files (可选 - 团队协作时可能需要包含)
+# package-lock.json
+
+# Backup files
+backend/backup/
+
+# Development documentation (if not needed in repo)
+DEV_README.md
+backend/REFACTORED_README.md
+backend/refactor_plan.md
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Redis dump files
+dump.rdb
+
+# Jupyter Notebook files (if any)
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files that might be generated
+*.csv
+*.xlsx
+*.json
+!package.json
+!package-lock.json 

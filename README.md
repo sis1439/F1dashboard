@@ -12,7 +12,7 @@ F1 Dashboard is a full-stack application that ingests official Formula 1 timing 
 
 ## Key Highlights
 
-• **FastAPI & Python 3.10** – asynchronous endpoints with automatic OpenAPI docs.  
+• **FastAPI & Python** – asynchronous endpoints with automatic OpenAPI docs.  
 • **React + TypeScript** – component-driven UI, state isolated via hooks and context.  
 • **Redis caching** – race results are cached for sub-100 ms repeated responses.  
 • **CI-ready** – pytest & React Testing Library tests included.  
@@ -56,13 +56,25 @@ redis-server
 ## Folder Structure
 ```text
 F1-dashboard/
-├─ backend/      # FastAPI service
-│  ├─ main.py
-│  ├─ schedule_api.py | standings_api.py | race_results_api.py
-│  └─ cache_utils.py
-├─ my-app/       # React client (CRA)
+├─ backend/             # FastAPI service
+│  ├─ main.py          # Legacy main entry point
+│  ├─ cache_utils.py   # Legacy cache utilities
+│  ├─ backup/          # Backup of old API files
+│  └─ src/             # Refactored backend structure
+│     ├─ main.py       # New main entry point
+│     ├─ config/       # Configuration settings
+│     ├─ controllers/  # API route handlers
+│     ├─ models/       # Data models and schemas
+│     ├─ repositories/ # Data access layer
+│     ├─ services/     # Business logic layer
+│     └─ utils/        # Utility functions
+├─ my-app/             # React client (CRA)
 │  └─ src/
-└─ tests/        # unit & integration tests
+│     ├─ api/          # API client
+│     ├─ components/   # React components
+│     ├─ contexts/     # React contexts
+│     └─ pages/        # Page components
+└─ src/                # Legacy React structure
 ```
 
 ---

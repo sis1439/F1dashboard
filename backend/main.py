@@ -5,7 +5,7 @@ from typing import Optional, List, Dict, Any
 # 导入业务逻辑函数
 from standings_api import get_driver_standings, get_constructor_standings
 from schedule_api import get_available_years, get_race_schedule, get_next_race_info, get_race_weekend_schedule, get_circuit_info
-from race_results_api import get_race_results, get_qualifying_results, get_practice_results, get_race_summary
+from backend.race_results_api_old import get_race_results, get_qualifying_results, get_practice_results, get_race_summary, get_race_highlights
 from cache_utils import clear_cache_pattern, redis_client
 
 app = FastAPI(
@@ -107,6 +107,13 @@ def race_summary(year: int = Query(...), round: int = Query(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/race-highlights")
+def race_highlights(year: int = Query(...), round: int = Query(...)):
+    try:
+        return get_race_highlights(year, round)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 # 管理API
 @app.get("/api/clear-cache")
 def clear_cache():
@@ -119,6 +126,7 @@ def clear_cache():
         total_cleared += clear_cache_pattern("race_qualifying_*")
         total_cleared += clear_cache_pattern("race_practice_*")
         total_cleared += clear_cache_pattern("race_summary_*")
+        total_cleared += clear_cache_pattern("race_highlights_*")
         
         # 清除单个键
         other_keys = ["available_years"]
@@ -141,6 +149,7 @@ def cache_stats():
             "qualifying_results": len(redis_client.keys("race_qualifying_*")),
             "practice_results": len(redis_client.keys("race_practice_*")),
             "race_summary": len(redis_client.keys("race_summary_*")),
+            "race_highlights": len(redis_client.keys("race_highlights_*")),
             "other": len(redis_client.keys("available_years"))
         }
         stats["total"] = sum(stats.values())
