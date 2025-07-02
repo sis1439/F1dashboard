@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Select, Button, Table, Tag, Spin, message } from 'antd';
 import { useTheme } from '../contexts/ThemeContext';
-import { getAvailableYears, getRaceSchedule, getRaceResults, getQualifyingResults, getPracticeResults, getAvailableSessions } from '../api';
+import { getAvailableYears, getRaceSchedule, getRaceResults, getQualifyingResults, getPracticeResults, getAvailableSessions, getRaceHighlights } from '../api';
 import './Results.css';
 
 // 在组件外部定义，保证引用稳定，避免在每次渲染时产生新数组对象
@@ -26,6 +26,8 @@ const Results = () => {
   const [resultsData, setResultsData] = useState([]);
   const [availableSessions, setAvailableSessions] = useState([]);
   const [sessionsLoading, setSessionsLoading] = useState(false);
+  const [raceHighlights, setRaceHighlights] = useState(null);
+  const [highlightsLoading, setHighlightsLoading] = useState(false);
 
   // 获取可用年份
   useEffect(() => {
@@ -96,6 +98,31 @@ const Results = () => {
     fetchAvailableSessions();
   }, [fetchAvailableSessions]);
 
+  // 获取比赛亮点数据
+  const fetchRaceHighlights = React.useCallback(async () => {
+    if (!selectedYear || !selectedRound) return;
+
+    setHighlightsLoading(true);
+    try {
+      const response = await getRaceHighlights(selectedYear, selectedRound);
+      setRaceHighlights(response.data);
+    } catch (error) {
+      console.error('Error fetching race highlights:', error);
+      setRaceHighlights({
+        race_winner: null,
+        pole_position: null,
+        fastest_lap: null
+      });
+    } finally {
+      setHighlightsLoading(false);
+    }
+  }, [selectedYear, selectedRound]);
+
+  // 获取比赛亮点
+  useEffect(() => {
+    fetchRaceHighlights();
+  }, [fetchRaceHighlights]);
+
   const fetchResults = React.useCallback(async () => {
     if (!selectedYear || !selectedRound) return;
 
@@ -124,7 +151,7 @@ const Results = () => {
 
     } catch (error) {
       console.error('Error fetching results:', error);
-      message.error('获取结果数据失败');
+      message.error('Failed to fetch results data');
       setResultsData([]);
     } finally {
       setLoading(false);
@@ -370,38 +397,60 @@ const Results = () => {
         </Row>
       </Card>
 
-      {/* 比赛信息 */}
+      {/* 比赛亮点信息 */}
       {selectedRaceInfo && (
         <Card className="race-info-card" style={{ marginBottom: 24 }}>
-          <Row gutter={16}>
-            <Col span={8}>
-              <div className="info-card">
-                <div className="info-title">比赛信息</div>
-                <div className="info-content">
-                  <div className="winner-name">{selectedRaceInfo.race_name}</div>
-                  <div className="winner-time">{selectedRaceInfo.location}</div>
+          <Spin spinning={highlightsLoading}>
+            <Row gutter={16}>
+              <Col span={8}>
+                <div className="info-card">
+                  <div className="info-title">Race Winner</div>
+                  <div className="info-content">
+                    {raceHighlights?.race_winner ? (
+                      <>
+                        <div className="winner-name">{raceHighlights.race_winner.driver_name}</div>
+                        <div className="winner-time">{raceHighlights.race_winner.race_time || 'No Data'}</div>
+                      </>
+                    ) : (
+                      <div className="winner-name">No Data</div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="info-card">
-                <div className="info-title">比赛日期</div>
-                <div className="info-content">
-                  <div className="winner-name">{selectedRaceInfo.date}</div>
-                  <div className="winner-time">Round {selectedRaceInfo.round}</div>
+              </Col>
+              <Col span={8}>
+                <div className="info-card">
+                  <div className="info-title">Pole Position</div>
+                  <div className="info-content">
+                    {raceHighlights?.pole_position ? (
+                      <>
+                        <div className="winner-name">{raceHighlights.pole_position.driver_name}</div>
+                        <div className="winner-time">{raceHighlights.pole_position.qualifying_time || 'No Data'}</div>
+                      </>
+                    ) : (
+                      <div className="winner-name">No Data</div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="info-card">
-                <div className="info-title">当前会话</div>
-                <div className="info-content">
-                  <div className="winner-name">{sessionType}</div>
-                  <div className="winner-time">{selectedYear} 赛季</div>
+              </Col>
+              <Col span={8}>
+                <div className="info-card">
+                  <div className="info-title">Fastest Lap</div>
+                  <div className="info-content">
+                    {raceHighlights?.fastest_lap ? (
+                      <>
+                        <div className="winner-name">{raceHighlights.fastest_lap.driver_name}</div>
+                        <div className="winner-time">
+                          Lap {raceHighlights.fastest_lap.lap_number} - {raceHighlights.fastest_lap.lap_time || 'No Data'}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="winner-name">No Data</div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </Spin>
         </Card>
       )}
 
@@ -416,7 +465,7 @@ const Results = () => {
             scroll={{ x: 'max-content' }}
             className="results-table"
             locale={{
-              emptyText: loading ? '数据加载中...' : `暂无${sessionType}数据，请尝试其他会话或比赛`
+              emptyText: loading ? 'Loading data...' : `No ${sessionType} data available, please try other sessions or races`
             }}
           />
         </Spin>

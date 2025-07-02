@@ -19,5 +19,6 @@ export const getQualifyingResults = (year, round) => api.get('/qualifying-result
 export const getPracticeResults = (year, round, session) => api.get('/practice-results', { params: { year, round, session } });
 export const getRaceSummary = (year, round) => api.get('/race-summary', { params: { year, round } });
 export const getAvailableSessions = (year, round) => api.get('/race-summary', { params: { year, round } });
+export const getRaceHighlights = (year, round) => api.get('/race-highlights', { params: { year, round } });
 
 export default api; 
