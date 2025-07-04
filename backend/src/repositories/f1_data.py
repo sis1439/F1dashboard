@@ -14,8 +14,7 @@ class F1DataRepository:
     
     def __init__(self):
         """Initialize F1 data repository"""
-        # Set up FastF1 cache directory
-        fastf1.Cache.enable_cache(settings.fastf1_cache_dir)
+        # Note: FastF1 cache is initialized in main.py startup
         self.ergast_base_url = "https://api.jolpi.ca/ergast/f1"
     
     # FastF1 Data Access Methods

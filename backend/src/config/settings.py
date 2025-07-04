@@ -28,7 +28,10 @@ class Settings(BaseSettings):
     cache_ttl_race_results: int = Field(default=2592000, env="CACHE_TTL_RACE_RESULTS")  # 30 days
     
     # FastF1 settings
-    fastf1_cache_dir: str = Field(default="./cache", env="FASTF1_CACHE_DIR")
+    fastf1_cache_dir: str = Field(
+        default=os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "cache"),
+        env="FASTF1_CACHE_DIR"
+    )
     
     # Logging settings
     log_level: str = Field(default="INFO", env="LOG_LEVEL")

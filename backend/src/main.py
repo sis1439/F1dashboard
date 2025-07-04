@@ -41,8 +41,15 @@ async def lifespan(app: FastAPI):
     # Initialize FastF1 cache
     try:
         import fastf1
-        fastf1.Cache.enable_cache(settings.fastf1_cache_dir)
-        logger.info(f"FastF1 cache enabled at: {settings.fastf1_cache_dir}")
+        
+        # Create cache directory if it doesn't exist
+        cache_dir = settings.fastf1_cache_dir
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
+            logger.info(f"Created FastF1 cache directory: {cache_dir}")
+        
+        fastf1.Cache.enable_cache(cache_dir)
+        logger.info(f"FastF1 cache enabled at: {cache_dir}")
     except Exception as e:
         logger.error(f"Failed to initialize FastF1 cache: {e}")
     
