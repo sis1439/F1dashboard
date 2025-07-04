@@ -83,7 +83,7 @@ session_results_analysis.json
 check_cache.py
 
 # FastF1 cache files
-backend/src/cache/
+backend/cache/
 *.sqlite
 *.sqlite3
 
